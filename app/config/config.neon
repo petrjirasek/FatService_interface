@@ -9,9 +9,9 @@ common:
 		database:
 			driver: mysql
 			host: localhost
-			dbname: test
-			user:
-			password:
+			dbname: fatservice
+			user: fatservice
+			password: traktor
 
 
 	php:
