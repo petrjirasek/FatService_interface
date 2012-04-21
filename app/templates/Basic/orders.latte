@@ -1,0 +1,61 @@
+{* This is the welcome page, you can delete it *}
+
+{block content}
+
+<h1>Orders</h1>
+<p>You can manage all orders and the orders which are ready to deliver mark as delivered.</p>
+
+
+<h3>Undelivered orders</h3>
+
+
+<table class="table table-striped" width="100%">
+    <thead>
+    <tr>
+        <th width="5%"> ID</th>
+        <th width="67%"> Order</th>
+        <th width="8%"> Time</th>
+        <th width="8%"> Date</th>
+        <th width="12%"> Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr  n:foreach="$orders as $order" n:if="!$order->getDelivered()" >
+        <td> {$order->getId()} </td>
+        <td> {$order->getOrder()} </td>
+        <td> {$order->getDatetime()|date:'%H:%M:%S'} </td>
+        <td> {$order->getDatetime()|date:'%m/%d/%Y'} </td>
+        <td>
+            <a n:href="Basic:deliverOrder $order->getId()" class="btn btn-success">Delivered</a>
+            <a n:href="Basic:deleteOrder $order->getId()" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmation">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+<h3>Delivered orders</h3>
+
+<table class="table table-striped" width="100%">
+    <thead>
+    <tr>
+        <th width="5%"> ID</th>
+        <th width="67%"> Order</th>
+        <th width="8%"> Time</th>
+        <th width="8%"> Date</th>
+        <th width="12%"> Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr n:foreach="$orders as $order" n:if="$order->getDelivered()">
+        <td> {$order->getId()} </td>
+        <td> {$order->getOrder()} </td>
+        <td> {$order->getDatetime()|date:'%H:%M:%S'} </td>
+        <td> {$order->getDatetime()|date:'%m/%d/%Y'} </td>
+        <td>
+            <a n:href="Basic:deleteOrder $order->getId()" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmation">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>

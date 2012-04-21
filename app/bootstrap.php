@@ -14,8 +14,9 @@ require LIBS_DIR . '/Nette/loader.php';
 $configurator = new Nette\Config\Configurator;
 
 // Enable Nette Debugger for error visualisation & logging
-//$configurator->setDebugMode($configurator::AUTO);
+//$configurator->setDebugMode($configurator::NONE);
 $configurator->enableDebugger(__DIR__ . '/../log');
+//\Nette\Diagnostics\Debugger::enable();
 
 // Enable RobotLoader - this will load all classes automatically
 $configurator->setTempDirectory(__DIR__ . '/../temp');
@@ -29,9 +30,11 @@ $configurator->addConfig(__DIR__ . '/config/config.neon');
 $container = $configurator->createContainer();
 
 // Setup router
-$container->router[] = new Route('index.php', 'Homepage:default', Route::ONE_WAY);
-$container->router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
+$container->router[] = new Route('index.php', 'Basic:default', Route::ONE_WAY);
+$container->router[] = new Route('<presenter>/<action>[/<id>]', 'Basic:default');
 
+
+\Nette\Diagnostics\Debugger::enable(\Nette\Diagnostics\Debugger::DEVELOPMENT);
 
 // Configure and run the application!
 $container->application->run();
