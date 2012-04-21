@@ -11,6 +11,16 @@ class ItemFacade
         $this->repository = $repository;
     }
 
+
+    /**
+     * @return \Item[]
+     */
+    public function getAllItems()
+    {
+        return $this->repository->findAll(null);
+    }
+
+
     /**
      * @return \Item[]
      */

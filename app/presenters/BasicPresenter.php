@@ -15,6 +15,12 @@ class BasicPresenter extends BasePresenter
 	}
 
 
+    public function actionRegisterOrder($burger, $sidedish, $size, $drink) {
+        $new = new Order(null, $burger . ' ' . $sidedish . ' ' . $drink);
+        $this->context->orderFacade->persist($new);
+    }
+
+
     public function renderOrders() {
         $new = new Order(null, 'New Big One');
         //$this->context->orderFacade->persist($new);
@@ -60,7 +66,7 @@ class BasicPresenter extends BasePresenter
 
 
     public function renderStrategy() {
-
+        $this->template->items = $this->context->itemFacade->getAllItems();
     }
 
 

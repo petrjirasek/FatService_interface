@@ -31,7 +31,10 @@ class ItemRepository extends \Nette\Database\Table\Selection
      */
     public function findAll($category)
     {
-        $rows = $this->where('category', $category);
+        if ($category !== null)
+            $rows = $this->where('category', $category);
+        else
+            $rows = $this;
         $items = array();
         foreach ($rows as $row) {
             $item = new Item(
