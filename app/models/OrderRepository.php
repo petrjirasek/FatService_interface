@@ -32,7 +32,7 @@ class OrderRepository extends \Nette\Database\Table\Selection
      */
     public function findAll()
     {
-        $rows = $this->order('datetime');
+        $rows = $this->order('datetime DESC');
         $orders = array();
         foreach ($rows as $row) {
             $order = new Order(

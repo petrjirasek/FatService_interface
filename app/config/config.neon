@@ -37,7 +37,10 @@ common:
 			class: OrderFacade(@orderRepository)
 		orderRepository:
 			class: OrderRepository(@database)
-
+		itemFacade:
+			class: ItemFacade(@itemRepository)
+		itemRepository:
+			class: ItemRepository(@database)
 
 	factories:
 
