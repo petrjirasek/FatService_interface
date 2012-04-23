@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Basic presenter.
- *
- * @author     John Doe
- * @package    MyApplication
- */
 class BasicPresenter extends BasePresenter
 {
 
