@@ -26,7 +26,7 @@ class Item extends \Nette\Object
 
 
     public function setId($id) {
-        if ($id == null)
+        if ($this->id == null)
             $this->id = $id;
     }
 

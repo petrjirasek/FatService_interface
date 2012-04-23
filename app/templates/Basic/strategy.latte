@@ -12,6 +12,32 @@
                         <ruleref uri="#drink"/>
                         <tag>{ out.init="true"; out.burger = rules.burger; out.sidedish ="chips"; out.size = rules.size; out.drink = rules.drink; }</tag>
                     </item>
+                    <item>
+                        <ruleref special="GARBAGE"/>
+                        <ruleref uri="#burger"/> with
+                        chips and
+                        <ruleref uri="#drink"/>
+                        <tag>{ out.init="true"; out.burger = rules.burger; out.sidedish ="chips"; out.drink = rules.drink; }</tag>
+                    </item>
+                    <item>
+                        <ruleref special="GARBAGE"/>
+                        <ruleref uri="#burger"/> with
+                        salat and
+                        <ruleref uri="#drink"/>
+                        <tag>{ out.init="true"; out.burger = rules.burger; out.sidedish ="salat"; out.drink = rules.drink; }</tag>
+                    </item>
+                    <item>
+                        <ruleref special="GARBAGE"/>
+                        <ruleref uri="#burger"/> with
+                        salat
+                        <tag>{ out.init="true"; out.burger = rules.burger; out.sidedish ="salat";  }</tag>
+                    </item>
+                    <item>
+                        <ruleref special="GARBAGE"/>
+                        <ruleref uri="#burger"/> with
+                        chips
+                        <tag>{ out.init="true"; out.burger = rules.burger; out.sidedish ="chips"; }</tag>
+                    </item>
                 </one-of>
             </rule>
             <rule id="burger">
@@ -67,7 +93,10 @@
             </nomatch>
         </initial>
         <field name="burger">
-            <prompt>Which burger do you want??</prompt>
+            <prompt>Which burger do you want? You can choose from:?</prompt>
+            <prompt n:foreach="$items as $item" n:if="$item->getCategory() == 'burgers'">
+            {$item->getName()},
+            </prompt>
             <grammar root="burger">
                 <rule id="burger">
                     <one-of>
@@ -90,7 +119,10 @@
             </grammar>
         </field>
         <field name="size" cond="sidedish = 'chips'">
-            <prompt>Which size of chips do you want?</prompt>
+            <prompt>Which size of chips do you want? You can choose from:</prompt>
+            <prompt>small,</prompt>
+            <prompt>medium,</prompt>
+            <prompt>super size</prompt>
             <grammar root="size">
                 <rule id="size">
                     <one-of>
@@ -102,7 +134,10 @@
             </grammar>
         </field>
         <field name="drink">
-            <prompt>What do you want to drink?</prompt>
+            <prompt>What do you want to drink? You can choose from: </prompt>
+            <prompt n:foreach="$items as $item" n:if="$item->getCategory() == 'drinks'">
+            {$item->getName()},
+            </prompt>
             <grammar root="drink">
                 <rule id="drink">
                     <one-of>
@@ -124,22 +159,29 @@
                 <value expr="burger"/> with
                 <value expr="sidedish"/>
                 and
-                <value expr="drink"/>
+                <value expr="drink"/>.
             </prompt>
             <prompt>
-                Yes or no?
+                Please, confirm this order or cancel.
             </prompt>
             <grammar root="confirm">
                 <rule id="confirm">
                     <one-of>
+                        <item tag="Yes">Confirm</item>
                         <item>Yes</item>
                         <item>No</item>
+                        <item tag="No">Cancel</item>
                     </one-of>
                 </rule>
             </grammar>
         </field>
         <filled>
-            <prompt>Your order is accepted. Thank you. Bye.</prompt>
+            <if cond="confirm == 'No'">
+                <prompt>
+                    Ok. Bye.
+                </prompt>
+                <disconnect />
+            </if>
             <submit next="http://fatservice.petrjirasek.cz{link Basic:registerOrder}" method="get" namelist="burger sidedish size drink"/>
         </filled>
     </form>

@@ -18,6 +18,7 @@ class BasicPresenter extends BasePresenter
     public function actionRegisterOrder($burger, $sidedish, $size, $drink) {
         $new = new Order(null, $burger . ' ' . $sidedish . ' ' . $drink);
         $this->context->orderFacade->persist($new);
+        $this->template->newOrder = $new;
     }
 
 
@@ -73,7 +74,8 @@ class BasicPresenter extends BasePresenter
     protected function createComponentBurgerForm()
     {
         $form = new Nette\Application\UI\Form;
-        $form->addText('name', 'Burger name:', null, 50);
+        $form->addText('name', 'Burger name:', null, 50)
+            ->addRule($form::FILLED, null);
         $form->addHidden('category', 'burgers');
         $form->addSubmit('submit', 'Add burger');
         $form->onSuccess[] = callback($this, 'itemFormSubmitted');
@@ -84,7 +86,8 @@ class BasicPresenter extends BasePresenter
     protected function createComponentDrinkForm()
     {
         $form = new Nette\Application\UI\Form;
-        $form->addText('name', 'Drink name:', null, 50);
+        $form->addText('name', 'Drink name:', null, 50)
+            ->addRule($form::FILLED, null);
         $form->addHidden('category', 'drinks');
         $form->addSubmit('submit', 'Add drink');
         $form->onSuccess[] = callback($this, 'itemFormSubmitted');
