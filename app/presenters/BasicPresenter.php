@@ -16,18 +16,23 @@ class BasicPresenter extends BasePresenter
 
 
     public function actionRegisterOrder($burger, $sidedish, $size, $drink) {
-        $new = new Order(null, $burger . ' ' . $sidedish . ' ' . $drink);
+
+        $burger = strtolower($burger);
+        $drink = strtolower($drink);
+
+        if($sidedish == 'chips') {
+            $message = $burger ." + ".$size." chips + ".$drink;
+        } else {
+            $message = $burger ." + salat + ".$drink;
+        }
+
+        $new = new Order(null, $message);
         $this->context->orderFacade->persist($new);
         $this->template->newOrder = $new;
     }
 
 
     public function renderOrders() {
-        $new = new Order(null, 'New Big One');
-        //$this->context->orderFacade->persist($new);
-       // $this->context->orderFacade->remove($new);
-
-
         $this->template->orders = $this->context->orderFacade->getAllOrders();
     }
 

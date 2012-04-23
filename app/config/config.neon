@@ -11,7 +11,7 @@ common:
 			host: localhost
 			dbname: fatservice
 			user: fatservice
-			password: 
+			password: traktor
 
 
 	php:
